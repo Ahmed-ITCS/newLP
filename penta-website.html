@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Penta Cipher - Production-Ready MVP Development</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"></script>
+  <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0e3240',
+                        teal: '#10d1d2',
+                        mint: '#e9fffd',
+                        white: '#ffffff'
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                    fontFamily: {
+                        headline: ["Montserrat", "sans-serif"],
+                        body: ["Open Sans", "sans-serif"],
+                        label: ["Montserrat", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+  <style>
+    body { background-color: #0e3240; color: #ffffff; }
+    .five-bar-motif {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        height: 24px;
+    }
+    .bar {
+        width: 4px;
+        background-color: #10d1d2;
+        border-radius: 9999px;
+        transition: height 0.3s ease;
+    }
+    .bar-1 { height: 10px; }
+    .bar-2 { height: 16px; }
+    .bar-3 { height: 22px; }
+    .bar-4 { height: 16px; }
+    .bar-5 { height: 10px; }
+    
+    .circuit-bg {
+        background-image: radial-gradient(circle at center, rgba(16, 209, 210, 0.05) 0%, transparent 70%);
+        background-size: 100% 100%;
+    }
+  </style>
+</head>
+
+<body class="font-body min-h-screen flex flex-col antialiased selection:bg-teal selection:text-navy relative overflow-hidden">
+
+  <!-- Decorative background elements -->
+  <div class="absolute inset-0 pointer-events-none circuit-bg z-0"></div>
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+    <div class="absolute top-[-20%] right-[-10%] w-[60%] h-[60%] rounded-full bg-teal/5 blur-[120px]"></div>
+    <div class="absolute bottom-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-teal/5 blur-[100px]"></div>
+  </div>
+
+  <!-- TopNavBar -->
+  <nav class="bg-[#0e3240] font-body text-base leading-relaxed docked full-width top-0 border-b border-white/10 flat no shadows relative z-50">
+    <div class="flex justify-between items-center px-8 py-4 w-full max-w-7xl mx-auto">
+      <!-- Brand -->
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded bg-white/5 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[#10d1d2] text-xl" style="font-variation-settings: 'FILL' 1;">hexagon</span>
+        </div>
+        <a class="font-headline font-extrabold uppercase tracking-tight text-white text-xl" href="#">PENTA CIPHER</a>
+      </div>
+      <!-- Navigation Links (Desktop) -->
+      <div class="hidden md:flex items-center gap-8">
+        <a class="text-white/80 hover:text-white transition-colors hover:text-[#10d1d2] transition-all font-label uppercase tracking-[0.2em] text-xs" href="#solutions">Solutions</a>
+        <a class="text-white/80 hover:text-white transition-colors hover:text-[#10d1d2] transition-all font-label uppercase tracking-[0.2em] text-xs" href="#about">About</a>
+        <a class="text-white/80 hover:text-white transition-colors hover:text-[#10d1d2] transition-all font-label uppercase tracking-[0.2em] text-xs" href="#contact">Contact</a>
+      </div>
+      <!-- Trailing Action -->
+      <div class="flex items-center gap-4">
+        <a class="bg-teal text-navy font-label uppercase tracking-[0.2em] text-xs font-bold px-8 py-4 rounded hover:bg-white transition-colors duration-300 shadow-[0_0_20px_rgba(16,209,210,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] active:scale-95 duration-300 flex items-center gap-2" href="#request-review">
+          Schedule Review
+        </a>
+        <button class="md:hidden text-white/80 hover:text-[#10d1d2] transition-colors p-2">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Hero Content -->
+  <main class="flex-grow flex items-center justify-center relative z-10 w-full max-w-7xl mx-auto px-8 py-20 lg:py-32">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <!-- Text Content -->
+      <div class="flex flex-col items-start gap-8 z-10">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-4 py-1.5 backdrop-blur-sm">
+          <div class="five-bar-motif scale-75 origin-left">
+            <div class="bar bar-1"></div>
+            <div class="bar bar-2"></div>
+            <div class="bar bar-3"></div>
+            <div class="bar bar-4"></div>
+            <div class="bar bar-5"></div>
+          </div>
+          <span class="font-label uppercase tracking-[0.2em] text-[10px] text-teal">Systems Architecture</span>
+        </div>
+        
+        <h1 class="font-headline font-extrabold uppercase tracking-[0.01em] text-5xl lg:text-7xl leading-[1.1] text-white max-w-2xl">
+          Launch a production-ready MVP in 12 weeks<br />
+          <span class="text-teal relative inline-block">Without hiring an engineering team</span>
+        </h1>
+        
+        <p class="font-body text-lg lg:text-xl leading-[1.7] text-white/80 max-w-xl">
+          We build scalable, secure software solutions that drive business outcomes. Founded by engineers, built for founders who need results— not excuses.
+        </p>
+        
+        <div class="flex flex-wrap items-center gap-4 pt-4">
+          <a class="bg-teal text-navy font-label uppercase tracking-[0.2em] text-xs font-bold px-8 py-4 rounded hover:bg-white transition-colors duration-300 shadow-[0_0_20px_rgba(16,209,210,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] active:scale-95 flex items-center gap-2" href="#request-review">
+            Get Started
+            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+          </a>
+          <a class="bg-transparent text-white border border-white/20 font-label uppercase tracking-[0.2em] text-xs font-bold px-8 py-4 rounded hover:border-teal hover:text-teal transition-colors duration-300 active:scale-95" href="#about">
+            Our Expertise
+          </a>
+        </div>
+      </div>
+      
+      <!-- Trust Indicators & Qualifier -->
+      <div class="pt-12 border-t border-white/10 w-full flex items-center gap-8 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+        <span class="font-label uppercase tracking-[0.2em] text-[10px] text-white/60 whitespace-nowrap">Built for Funded Founders</span>
+        <div class="flex gap-4">
+          <div class="flex items-center gap-2 text-white/70 text-sm">
+            <span class="material-symbols-outlined">check_circle</span>
+            <span>Validated idea or prototype</span>
+          </div>
+          <div class="flex items-center gap-2 text-white/70 text-sm">
+            <span class="material-symbols-outlined">schedule</span>
+            <span>12-week timeline</span>
+          </div>
+          <div class="flex items-center gap-2 text-white/70 text-sm">
+            <span class="material-symbols-outlined">monetization_on</span>
+            <span>$10K+ budget</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Visual Content -->
+      <div class="relative w-full aspect-square max-w-lg mx-auto lg:ml-auto z-10 hidden md:block">
+        <!-- Abstract tech/circuit visual housing the logo -->
+        <div class="absolute inset-0 border border-teal/20 rounded-full flex items-center justify-center animate-[spin_60s_linear_infinite]">
+          <div class="w-[90%] h-[90%] border border-white/10 rounded-full"></div>
+        </div>
+        <div class="absolute inset-0 border border-teal/10 rounded-full flex items-center justify-center animate-[spin_40s_linear_infinite_reverse] scale-75">
+          <div class="w-full h-full bg-teal/5 rounded-full backdrop-blur-3xl"></div>
+        </div>
+        <!-- Central Emblem -->
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div class="relative w-48 h-48 bg-navy border border-teal/30 rounded-2xl shadow-[0_0_40px_rgba(16,209,210,0.15)] flex items-center justify-center p-8 backdrop-blur-md transform rotate-45 group hover:border-teal/60 transition-colors duration-500">
+            <img alt="Penta Cipher Emblem" class="w-full h-full object-contain transform -rotate-45 drop-shadow-[0_0_15px_rgba(16,209,210,0.5)]" src="https://lh3.googleusercontent.com/aida/AP1WRLvh7IxHc71yjEyYivUZUxjr7rqaRruIfGeFcV5_5E5cdtG0UIPWQ4GoaVOG5oqcF5qLm2QR9BsOvl2YBvWv5TlfdrqC0np0vQZj9tS3SlgxhpKRCTMGY4-Jl6_uPZerwlPTUMa_t9kuj2tlpVqNxDypAUDZiVivfI3KrXUkDovVdS0TtCosFv2AApZCiIwkXiKJ3kR3W0wDpVRR-4hTpPrS05R0JjAqGTch9yHduaZjsR-4C8WBihfO8os"/>
+          </div>
+        </div>
+        <!-- Corner accents -->
+        <div class="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-teal -translate-x-1 -translate-y-1"></div>
+        <div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-teal translate-x-1 -translate-y-1"></div>
+        <div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-teal -translate-x-1 translate-y-1"></div>
+        <div class="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-teal translate-x-1 translate-y-1"></div>
+        <!-- Floating tech nodes -->
+        <div class="absolute top-10 right-10 w-12 h-12 bg-white/5 border border-white/10 rounded backdrop-blur-md flex items-center justify-center animate-bounce" style="animation-duration: 4s;">
+          <span class="material-symbols-outlined text-teal text-xl">code</span>
+        </div>
+        <div class="absolute bottom-20 left-4 w-14 h-14 bg-white/5 border border-white/10 rounded backdrop-blur-md flex items-center justify-center animate-bounce" style="animation-duration: 5s; animation-delay: 1s;">
+          <span class="material-symbols-outlined text-teal text-2xl">memory</span>
+        </div>
+        <div class="absolute top-1/2 -right-4 w-10 h-10 bg-white/5 border border-white/10 rounded backdrop-blur-md flex items-center justify-center animate-bounce" style="animation-duration: 3s; animation-delay: 2s;">
+          <span class="material-symbols-outlined text-teal text-lg">terminal</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Product Architecture Review Section -->
+  <section class="py-24 lg:py-32 bg-white/5 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div class="lg order-2">
+          <h2 class="font-headline font-extrabold uppercase tracking-[0.01em] text-4xl lg:text-5xl text-white mb-6">
+            The Founder's Fast Track to Production
+          </h2>
+          <p class="font-body text-lg text-white/80 leading-relaxed mb-8 max-w-xl">
+            Our free 30-minute Product Architecture and Delivery Review is diagnostic, not a sales call. We examine your product stage, launch deadline, and technical risks, then recommend the most practical route to production.
+          </p>
+          <ul class="space-y-4 text-white/70 text-sm">
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-teal">check_circle</span>
+              <span>Identify technical risks and mitigation strategies</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-teal">timeline</span>
+              <span>Realistic 12-week launch plan</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-teal">security</span>
+              <span>Authentication, billing, deployment ready</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-teal">archive</span>
+              <span>Full codebase ownership upon delivery</span>
+            </li>
+          </ul>
+        </div>
+        <div class="lg:order-1">
+          <div class="bg-navy/20 border border-teal/20 rounded-2xl p-8 backdrop-blur-md">
+            <h3 class="font-headline font-extrabold uppercase tracking-[0.2em] text-teal text-sm mb-4">Is this for you?</h3>
+            <ul class="space-y-3 text-white/70 text-sm">
+              <li>✓ You have validated concept, Figma prototypes, or incomplete MVP</li>
+              <li>✓ You need to launch within 3-6 months</li>
+              <li>✓ You have $10,000+ budget allocated</li>
+              <li>✓ No technical co-founder or weak freelance team</li>
+              <li>✓ Investors or customers expect a working product</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions Section -->
+  <section id="solutions" class="py-24 lg:py-32 relative">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="text-center mb-12">
+        <h2 class="font-headline font-extrabold uppercase tracking-[0.01em] text-4xl lg:text-5xl text-white mb-6">Solutions for Every Stage</h2>
+        <p class="font-body text-lg text-white/80 max-w-2xl mx-auto">From MVP to scale—we engineering teams that deliver production-ready results.</p>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="bg-navy/20 border border-teal/20 rounded-2xl p-6 backdrop-blur-md hover:border-teal/30 transition-colors duration-300">
+          <div class="h-12 w-12 bg-teal/10 rounded-full flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-teal">flash_on</span>
+          </div>
+          <h3 class="font-headline font-extrabold text-white text-lg mb-2">MVP Development</h3>
+          <p class="text-white/80 text-sm leading-relaxed">Production-ready MVP in 12 weeks with full codebase ownership</p>
+        </div>
+        <div class="bg-navy/20 border border-teal/20 rounded-2xl p-6 backdrop-blur-md hover:border-teal/30 transition-colors duration-300">
+          <div class="h-12 w-12 bg-teal/10 rounded-full flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-teal">security</span>
+          </div>
+          <h3 class="font-headline font-extrabold text-white text-lg mb-2">Security & SOC 2</h3>
+          <p class="text-white/80 text-sm leading-relaxed">Security hardening and compliance preparation for enterprise readiness</p>
+        </div>
+        <div class="bg-navy/20 border border-teal/20 rounded-2xl p-6 backdrop-blur-md hover:border-teal/30 transition-colors duration-300">
+          <div class="h-12 w-12 bg-teal/10 rounded-full flex items-center justify-center mb-4">
+            <span class="material-symbols-outlined text-teal">grid_on</span>
+          </div>
+          <h3 class="font-headline font-extrabold text-white text-lg mb-2">Scaling & DevOps</h3>
+          <p class="text-white/80 text-sm leading-relaxed">Infrastructure scaling, CI/CD, and performance optimization</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-24 lg:py-32 bg-white/5 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <h2 class="font-headline font-extrabold uppercase tracking-[0.01em] text-4xl lg:text-5xl text-white mb-6">Engineering Precision. Business Outcomes.</h2>
+          <p class="font-body text-lg text-white/80 leading-relaxed mb-6">
+            Penta Cipher Technologies is a software engineering company founded by two engineers—a DevOps specialist and a full-stack & AI engineer. We bridge the gap between technical execution and commercial success for B2B SaaS founders.
+          </p>
+          <ul class="space-y-3 text-white/70 text-sm">
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-teal">star</span>
+              <span>12-week MVP delivery track record</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-teal">security</span>
+              <span>Zero-compromise security and compliance</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-teal">trending_up</span>
+              <span>Founder-first communication and transparency</span>
+            </li>
+          </ul>
+        </div>
+        <div class="relative lg:order-2">
+          <div class="absolute inset-0 rounded-2xl overflow-hidden bg-navy/30">
+            <div class="absolute inset-0 border border-teal/20 rounded-2xl flex items-center justify-center">
+              <div class="five-bar-motif scale-75 origin-left">
+                <div class="bar bar-1"></div>
+                <div class="bar bar-2"></div>
+                <div class="bar bar-3"></div>
+                <div class="bar bar-4"></div>
+                <div class="bar bar-5"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="contact" class="py-24 lg:py-32 relative">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="bg-navy/20 border border-teal/20 rounded-2xl p-8 md:p-12 backdrop-blur-md">
+        <h2 class="font-headline font-extrabold uppercase tracking-[0.01em] text-3xl lg:text-4xl text-white mb-4">
+          Ready to launch your MVP?
+        </h2>
+        <p class="font-body text-lg text-white/80 mb-8 max-w-2xl mx-auto">
+          Stop wondering if your product will launch on time. Get a concrete plan in 30 minutes.
+        </p>
+        <a class="bg-teal text-navy font-label uppercase tracking-[0.2em] text-xs font-bold px-8 py-4 rounded hover:bg-white transition-colors duration-300 shadow-[0_0_20px_rgba(16,209,210,0.3)] hover:shadow-[0_0_25px_rgba(255,255,255,0.4)] active:scale-95 flex items-center gap-2" href="#request-review">
+          Schedule My Free Review
+          <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#0e3240] full-width bottom-0 border-t border-white/10 flat no shadows relative z-20">
+    <div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 w-full max-w-7xl mx-auto gap-8">
+      <div class="font-headline font-extrabold text-white text-lg">
+        PENTA CIPHER
+      </div>
+      <div class="flex flex-wrap justify-center gap-8">
+        <a class="text-white/60 hover:text-[#10d1d2] transition-colors font-label uppercase tracking-[0.2em] text-xs opacity-80 hover:opacity-100" href="#solutions">Solutions</a>
+        <a class="text-white/60 hover:text-[#10d1d2] transition-colors font-label uppercase tracking-[0.2em] text-xs opacity-80 hover:opacity-100" href="#about">About</a>
+        <a class="text-white/60 hover:text-[#10d1d2] transition-colors font-label uppercase tracking-[0.2em] text-xs opacity-80 hover:opacity-100" href="#contact">Contact</a>
+      </div>
+      <div class="font-label uppercase tracking-[0.2em] text-xs text-white/60 text-center md:text-right">
+        © 2024 Penta Cipher Technologies. Engineering Precision.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Subtle interaction for the five-bar motif
+    document.addEventListener('DOMContentLoaded', () => {
+        const bars = document.querySelectorAll('.bar');        
+        
+        setInterval(() => {
+            bars.forEach(bar => {
+                const currentHeight = parseInt(getComputedStyle(bar).height);
+                const variance = Math.floor(Math.random() * 10) - 5; // -5 to +5
+                let newHeight = currentHeight + variance;
+                
+                // Constrain heights
+                if(newHeight < 6) newHeight = 6;
+                if(newHeight > 24) newHeight = 24;
+                
+                bar.style.height = `${newHeight}px`;
+            });
+        }, 800);
+    });
+  </script>
+</body>
+</html>

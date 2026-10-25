@@ -1,0 +1,11 @@
+{
+  "name": "penta-cipher-landing",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "npm --prefix penta-react install --no-audit --no-fund",
+    "dev": "npm --prefix penta-react run dev",
+    "build": "npm --prefix penta-react run build",
+    "preview": "npm --prefix penta-react run preview"
+  }
+}

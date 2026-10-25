@@ -1,0 +1,28 @@
+# Build output
+dist
+dist-ssr
+
+# Dependencies
+node_modules
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor / OS
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Internal reference material (not needed to build/deploy)
+Penta Cipher Competitors list.xlsx
+penta-cipher-brand-guidelines (1).pdf
+WhatsApp Image 1447-02-25 at 15.39.35.jpeg
