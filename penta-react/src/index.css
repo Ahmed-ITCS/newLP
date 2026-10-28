@@ -393,6 +393,7 @@ img {
 
 .nav__link {
   font-family: var(--font-display);
+  white-space: nowrap;
   font-weight: 600;
   font-size: 11px;
   letter-spacing: 0.18em;
@@ -1566,8 +1567,8 @@ img {
   }
 
   .hero__visual {
-    order: -1;
-    max-width: 320px;
+    order: 0;
+    max-width: 300px;
     margin-inline: auto;
   }
 
@@ -1594,9 +1595,14 @@ img {
   }
 }
 
-@media (max-width: 760px) {
-  :root {
-    --gutter: 18px;
+@media (max-width: 1200px) {
+  .nav__links {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: grid;
+    place-items: center;
   }
 
   .nav__scrim {
@@ -1615,6 +1621,16 @@ img {
     position: relative;
     z-index: 1;
   }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --gutter: 18px;
+  }
+
+  .nav__actions .btn {
+    display: none;
+  }
 
   .hero__ctas {
     flex-direction: column;
@@ -1624,16 +1640,6 @@ img {
 
   .hero__ctas .btn {
     width: 100%;
-  }
-
-  .nav__links,
-  .nav__actions .btn {
-    display: none;
-  }
-
-  .nav__toggle {
-    display: grid;
-    place-items: center;
   }
 
   .nav__inner {
@@ -1717,6 +1723,34 @@ img {
   }
 }
 
+@media (max-width: 380px) {
+  .btn {
+    white-space: normal;
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  .hero__pill {
+    padding: 6px 12px 6px 8px;
+    gap: 8px;
+  }
+
+  .hero__pill span:last-child {
+    font-size: 8px;
+    letter-spacing: 0.07em;
+  }
+
+  .h-hero {
+    font-size: clamp(24px, 7.4vw, 32px);
+  }
+
+  .hero__ctas .btn {
+    padding: 15px 14px;
+    font-size: 10.5px;
+    letter-spacing: 0.09em;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1751,4 +1785,15 @@ img {
 .plans > .reveal > *,
 .process > .reveal > * {
   flex: 1;
+}
+
+.hero__grid > *,
+.contact__grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 1300px) {
+  .nav__links {
+    gap: 24px;
+  }
 }

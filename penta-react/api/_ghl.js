@@ -68,18 +68,24 @@ async function createContact({ name, email, phone, message, source }) {
     return { ok: false, reason: "no-contact-id" };
   }
 
-  if (message) {
-    const note = await ghlFetch(`/contacts/${contactId}/notes`, token, {
-      method: "POST",
-      body: JSON.stringify({ body: message }),
-    });
+  return { ok: true, contactId, via: "api" };
+}
 
-    if (!note.ok) {
-      console.error("GHL note failed", note.status, note.data);
-    }
+async function addNote(contactId, message) {
+  const token = process.env.GHL_API_TOKEN;
+
+  if (!token || !contactId || !message) {
+    return;
   }
 
-  return { ok: true, contactId, via: "api" };
+  const note = await ghlFetch(`/contacts/${contactId}/notes`, token, {
+    method: "POST",
+    body: JSON.stringify({ body: message }),
+  });
+
+  if (!note.ok) {
+    console.error("GHL note failed", note.status, note.data);
+  }
 }
 
 function escapeHtml(value) {
@@ -175,9 +181,27 @@ async function sendToWebhook({ name, email, phone, message, source }) {
     signal: AbortSignal.timeout(10000),
   });
 
+  const text = await response.text();
+  let data = null;
+
+  try {
+    data = text ? JSON.parse(text) : null;
+  } catch {
+    data = null;
+  }
+
   if (!response.ok) {
     console.error("GHL webhook returned HTTP", response.status);
     return { ok: false, reason: "webhook-failed", status: response.status };
+  }
+
+  const status = String(data?.status || "");
+
+  if (/test request received/i.test(status) || !data?.id) {
+    console.error(
+      "GHL webhook did not deliver the lead (trigger is in test mode or not mapped)",
+    );
+    return { ok: false, reason: "webhook-not-live", status: response.status };
   }
 
   return { ok: true, via: "webhook" };
@@ -189,11 +213,10 @@ async function submitLead(lead) {
   const apiResult = await createContact({ ...lead, source });
 
   if (apiResult.ok) {
-    try {
-      await notifyOwner(lead);
-    } catch (error) {
-      console.error("GHL owner notification failed");
-    }
+    await Promise.allSettled([
+      addNote(apiResult.contactId, lead.message),
+      notifyOwner(lead),
+    ]);
 
     return apiResult;
   }

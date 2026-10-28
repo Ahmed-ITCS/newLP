@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import Reveal from "./Reveal";
 import {
   ArrowRight,
@@ -125,6 +125,14 @@ export default function Contact() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
   const [submitError, setSubmitError] = useState("");
+  const successRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (status === "done") {
+      successRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [status]);
 
   const score = useMemo(() => scoreOf(form), [form]);
 
@@ -257,7 +265,7 @@ export default function Contact() {
 
         <Reveal delay={2}>
           {status === "done" ? (
-            <div className="success">
+            <div className="success" ref={successRef}>
               <div className="success__icon">
                 <Check size={30} strokeWidth={2.4} />
               </div>
@@ -281,6 +289,14 @@ export default function Contact() {
                   onClick={() => {
                     setForm(EMPTY);
                     setStatus("idle");
+                    setTimeout(
+                      () =>
+                        formRef.current?.scrollIntoView({
+                          behavior: "smooth",
+                          block: "center",
+                        }),
+                      60,
+                    );
                   }}
                 >
                   Submit another request
@@ -288,7 +304,7 @@ export default function Contact() {
               </div>
             </div>
           ) : (
-            <form className="form" onSubmit={onSubmit} noValidate>
+            <form className="form" ref={formRef} onSubmit={onSubmit} noValidate>
               <div className="form__row">
                 <div className={`field ${errors.name ? "has-error" : ""}`}>
                   <label htmlFor="name">
