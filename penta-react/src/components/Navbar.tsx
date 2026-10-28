@@ -31,6 +31,14 @@ export default function Navbar() {
 
   return (
     <header className={`nav ${scrolled ? "nav--scrolled" : ""}`}>
+      {open && (
+        <button
+          type="button"
+          className="nav__scrim"
+          aria-label="Close menu"
+          onClick={() => setOpen(false)}
+        />
+      )}
       <div className="wrap nav__inner">
         <a href="#top" className="brand" aria-label="Penta Cipher home">
           <Logo className="brand__mark" size={38} />

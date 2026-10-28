@@ -309,7 +309,7 @@ img {
   height: 66px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.02)),
-    rgba(9, 34, 45, 0.55);
+    rgba(10, 38, 50, 0.64);
   backdrop-filter: blur(20px) saturate(170%);
   -webkit-backdrop-filter: blur(20px) saturate(170%);
   border: 1px solid rgba(255, 255, 255, 0.16);
@@ -324,11 +324,15 @@ img {
 .nav--scrolled .nav__inner {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
-    rgba(6, 27, 36, 0.82);
+    rgba(6, 27, 36, 0.88);
   border-color: rgba(255, 255, 255, 0.2);
   box-shadow:
     0 26px 55px -26px rgba(0, 0, 0, 0.95),
     inset 0 1px 0 rgba(255, 255, 255, 0.16);
+}
+
+.nav__scrim {
+  display: none;
 }
 
 .brand {
@@ -442,8 +446,8 @@ img {
   border-radius: 18px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
-    rgba(6, 27, 36, 0.88);
-  backdrop-filter: blur(20px) saturate(170%);
+    rgba(6, 27, 36, 0.97);
+  backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(170%);
   box-shadow: 0 24px 50px -26px rgba(0, 0, 0, 0.9);
   pointer-events: auto;
@@ -1595,6 +1599,33 @@ img {
     --gutter: 18px;
   }
 
+  .nav__scrim {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(4, 20, 27, 0.5);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    pointer-events: auto;
+    border: 0;
+  }
+
+  .nav__inner,
+  .nav__mobile {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero__ctas {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .hero__ctas .btn {
+    width: 100%;
+  }
+
   .nav__links,
   .nav__actions .btn {
     display: none;
@@ -1606,15 +1637,26 @@ img {
   }
 
   .nav__inner {
-    height: 66px;
+    height: 62px;
+  }
+
+  .hero__pill {
+    padding: 7px 14px 7px 10px;
+    gap: 10px;
+  }
+
+  .hero__pill span:last-child {
+    font-size: 9px;
+    letter-spacing: 0.11em;
+    white-space: nowrap;
   }
 
   section[id] {
-    scroll-margin-top: 92px;
+    scroll-margin-top: 88px;
   }
 
   .hero {
-    padding-top: calc(80px + 34px);
+    padding-top: calc(76px + 32px);
     padding-bottom: 48px;
   }
 
